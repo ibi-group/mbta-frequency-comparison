@@ -1,23 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Map from "./Components/Map";
+import { useState } from "react";
+import data from "./Data/old_vs_new_segments.json";
+import Panel from "./Components/Panel";
 
 function App() {
+  const [variable, setVariable] = useState("total_freq_diff");
+
+  const values = data.features.map((f) => f.properties[variable]);
+
+  function changeVar() {
+    setVariable((state) =>
+      state === "total_freq_diff" ? "max_freq_diff" : "total_freq_diff"
+    );
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Panel setVariable={changeVar} variable={variable} />
+      <Map data={data.features} values={values} variable={variable} />
     </div>
   );
 }

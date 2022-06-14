@@ -1,0 +1,22 @@
+.panel {
+  background-color: #121212;
+  color: #fff;
+  position: fixed;
+  top: 20px;
+  left: 50px;
+  border-radius: 10px;
+  z-index: 10;
+  padding: 20px;
+}
+
+.button {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: darkorange;
+  color: #fff;
+}
+
+.button:hover {
+  cursor: pointer;
+}
