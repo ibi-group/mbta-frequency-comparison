@@ -67,7 +67,9 @@ const Map = ({ variable, values, data }) => {
           <Popup>
             <strong>Direction:</strong> {properties.dir_id}
             <br />
-            <strong>Routes:</strong> {properties.route_name}
+            <strong>Proposed Routes:</strong> {properties.route_name}
+            <br />
+            <strong>Old Routes:</strong> {properties.route_name_old}
             <br />
             <strong>Old Frequency:</strong> {properties.frequency_old}
             <br />
