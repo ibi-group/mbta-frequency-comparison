@@ -12,6 +12,7 @@ import "leaflet/dist/leaflet.css";
 import "leaflet-polylineoffset";
 import { scale, limits } from "chroma-js";
 import { useState, useMemo, Fragment } from "react";
+import Legend from "./Legend";
 
 const SetDataonZoom = (props) => {
   const map = useMapEvents({
@@ -26,9 +27,10 @@ const Map = ({ variable, values, data }) => {
   const [zoomLevel, setZoomLevel] = useState(13);
 
   const mapCenter = [42.3601, -71.0589];
+  const orange = "#f4a261";
 
   //Create color scale
-  const colors = scale(["#FFB35C", "#1F91AD"]).colors(5);
+  const colors = scale(["#f07167", "#0081a7"]).colors(5);
   const breaks = limits(values, "q", 5);
   const colorScale = scale(colors).domain(breaks);
 
@@ -46,7 +48,7 @@ const Map = ({ variable, values, data }) => {
 
       const options = {
         weight: both ? 3 : 1,
-        color: both ? colorScale(freq) : proposed ? "#D6AEC0" : "#a6a6a6",
+        color: both ? colorScale(freq) : proposed ? orange : "#a6a6a6",
         offset: IB ? 5 : 0,
         dashArray: IB ? "10, 5" : "",
       };
@@ -92,7 +94,7 @@ const Map = ({ variable, values, data }) => {
       color: both
         ? colorScale(feature.properties[variable])
         : proposed
-        ? "#D6AEC0"
+        ? orange
         : "#a6a6a6",
       weight: both ? 3 : 1,
     };
@@ -136,8 +138,10 @@ const Map = ({ variable, values, data }) => {
             </Fragment>
           )}
         </LayersControl>
+
         <SetDataonZoom setZoom={setZoomLevel} />
       </MapContainer>
+      <Legend colors={colors} breaks={breaks} />
     </div>
   );
 };

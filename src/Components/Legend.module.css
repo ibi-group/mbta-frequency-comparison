@@ -1,0 +1,18 @@
+.container {
+  position: fixed;
+  z-index: 20;
+  bottom: 20px;
+  right: 20px;
+  background-color: #121212;
+}
+
+.square {
+  height: 20px;
+  padding: 5px;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 500;
+  margin: 0px;
+}
