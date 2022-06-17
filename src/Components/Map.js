@@ -23,13 +23,15 @@ const SetDataonZoom = (props) => {
   return null;
 };
 
-const Map = ({ variable, values, data }) => {
+const Map = ({ variable, data }) => {
   const [zoomLevel, setZoomLevel] = useState(13);
 
   const mapCenter = [42.3601, -71.0589];
   const orange = "#f4a261";
 
   //Create color scale
+  const values = data.map((f) => f.properties[variable]);
+
   const colors = scale(["#f07167", "#0081a7"]).colors(5);
   const breaks = limits(values, "q", 5);
   const colorScale = scale(colors).domain(breaks);
