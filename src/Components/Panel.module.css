@@ -15,8 +15,27 @@
   border: none;
   background-color: #f4a261;
   color: #fff;
+  height: 50px;
 }
 
 .button:hover {
   cursor: pointer;
+}
+
+.dropZone {
+  width: 200px;
+  height: 70px;
+  border: 1px dashed grey;
+  border-radius: 5px;
+}
+
+.dropZoneUploaded {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-color: #fff;
+}
+
+.uploads {
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }

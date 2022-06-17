@@ -4,15 +4,28 @@ import classes from "./Panel.module.css";
 const Panel = (props) => {
   const [file, setFile] = useState();
   const [file2, setFile2] = useState();
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
   const fileChangeHandler = (event) => {
-    setFile(event.target.files[0]);
+    event.preventDefault();
+    if (
+      event.dataTransfer.files &&
+      event.dataTransfer.files[0].name.endsWith(".zip")
+    ) {
+      setFile(event.dataTransfer.files[0]);
+    }
   };
 
   const file2ChangeHandler = (event) => {
-    setFile2(event.target.files[0]);
+    event.preventDefault();
+    if (event.dataTransfer.files) {
+      setFile2(event.dataTransfer.files[0]);
+    }
   };
 
   const onFileUpload = () => {
@@ -20,7 +33,7 @@ const Panel = (props) => {
       return;
     }
 
-    setLoading(true);
+    props.setLoading(true);
     const formData = new FormData();
     formData.append("file", file);
     formData.append("file2", file2);
@@ -32,39 +45,57 @@ const Panel = (props) => {
       .then((res) => res.json())
       .then((object) => {
         props.setResponse(JSON.parse(object.data));
-        setLoading(false);
+        props.setLoading(false);
       })
       .catch((err) => {
         setError(true);
         console.log(err);
-        setLoading(false);
+        props.setLoading(false);
       });
   };
-
-  function dropHandler(e) {
-    e.preventDefault();
-
-    if (e.dataTransfer.items) {
-    }
-  }
 
   return (
     <div className={classes.panel}>
       <h1>MBTA Segments Comparison</h1>
-      {loading && <p>Loading!</p>}
       {error && <p>Error!</p>}
-      <input type="file" onChange={fileChangeHandler}></input>
-      <input type="file" onChange={file2ChangeHandler}></input>
-      <div className={classes.dropZone} onDrop={dropHandler}></div>
-      <button onClick={onFileUpload}>Upload File</button>
-      <button
-        className={classes.button}
-        onClick={() => {
-          props.setVariable();
-        }}
-      >
-        {props.variable}
-      </button>
+      <div className={classes.uploads}>
+        <div
+          className={
+            !file
+              ? classes.dropZone
+              : `${classes.dropZone} ${classes.dropZoneUploaded}`
+          }
+          onDragOver={handleDragOver}
+          onDrop={fileChangeHandler}
+        >
+          <p>{file ? "Uploaded" : "Drag Old GTFS Network here"}</p>
+        </div>
+        <div
+          className={
+            !file2
+              ? classes.dropZone
+              : `${classes.dropZone} ${classes.dropZoneUploaded}`
+          }
+          onDragOver={handleDragOver}
+          onDrop={file2ChangeHandler}
+        >
+          <p>{file2 ? "Uploaded" : "Drag Proposed GTFS Network here"}</p>
+        </div>
+
+        <button className={classes.button} onClick={onFileUpload}>
+          Compare
+        </button>
+        {props.loading && (
+          <button
+            className={classes.button}
+            onClick={() => {
+              props.setVariable();
+            }}
+          >
+            {props.variable}
+          </button>
+        )}
+      </div>
     </div>
   );
 };
