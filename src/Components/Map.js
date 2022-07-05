@@ -43,7 +43,6 @@ const Map = ({ variable, data }) => {
         return [pair[1], pair[0]];
       });
 
-      const IB = properties.dir_id === "Inbound";
       const freq = properties[variable];
       const both = properties._merge === "both";
       const proposed = properties._merge === "left_only";
@@ -51,8 +50,7 @@ const Map = ({ variable, data }) => {
       const options = {
         weight: both ? 3 : 1,
         color: both ? colorScale(freq) : proposed ? orange : "#a6a6a6",
-        offset: IB ? 5 : 0,
-        dashArray: IB ? "10, 5" : "",
+        offset: 5,
       };
 
       return (
@@ -67,19 +65,17 @@ const Map = ({ variable, data }) => {
           }}
         >
           <Popup>
-            <strong>Direction:</strong> {properties.dir_id}
-            <br />
             <strong>Proposed Routes:</strong> {properties.route_name}
             <br />
             <strong>Old Routes:</strong> {properties.route_name_old}
             <br />
-            <strong>Old Frequency:</strong> {properties.frequency_old}
+            <strong>Old All-Day Volume:</strong> {properties.frequency_old}
             <br />
-            <strong>New Frequency:</strong> {properties.frequency}
+            <strong>New All-Day Volume:</strong> {properties.frequency}
             <br />
-            <strong>Old Max Frequency:</strong> {properties.max_freq_old}
+            <strong>Old Max Hourly Frequency:</strong> {properties.max_freq_old}
             <br />
-            <strong>New Max Frequency:</strong> {properties.max_freq}
+            <strong>New Max Hourly Frequency:</strong> {properties.max_freq}
           </Popup>
         </Polyline>
       );
@@ -112,7 +108,7 @@ const Map = ({ variable, data }) => {
           url="https://api.mapbox.com/styles/v1/mapbox/dark-v10/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiaWJpLXRyYW5zaXQtZGF0YS10ZWFtIiwiYSI6ImNrcDI4aHFzMzFpMmcydnF3OHd5N3Z0OW8ifQ.IwReYu0rGZko64sy2mbPSg"
         />
         <LayersControl>
-          {zoomLevel >= 14 ? (
+          {zoomLevel >= 16 ? (
             lines
           ) : (
             <Fragment>
