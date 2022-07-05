@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/mbta-frequency-comparison/static/css/main.c3d1bb1e.css",
-    "main.js": "/mbta-frequency-comparison/static/js/main.547b8b58.js",
+    "main.css": "/mbta-frequency-comparison/static/css/main.70784b95.css",
+    "main.js": "/mbta-frequency-comparison/static/js/main.ba1ed86f.js",
     "static/js/787.20611f02.chunk.js": "/mbta-frequency-comparison/static/js/787.20611f02.chunk.js",
     "index.html": "/mbta-frequency-comparison/index.html",
-    "main.c3d1bb1e.css.map": "/mbta-frequency-comparison/static/css/main.c3d1bb1e.css.map",
-    "main.547b8b58.js.map": "/mbta-frequency-comparison/static/js/main.547b8b58.js.map",
+    "main.70784b95.css.map": "/mbta-frequency-comparison/static/css/main.70784b95.css.map",
+    "main.ba1ed86f.js.map": "/mbta-frequency-comparison/static/js/main.ba1ed86f.js.map",
     "787.20611f02.chunk.js.map": "/mbta-frequency-comparison/static/js/787.20611f02.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.c3d1bb1e.css",
-    "static/js/main.547b8b58.js"
+    "static/css/main.70784b95.css",
+    "static/js/main.ba1ed86f.js"
   ]
 }
