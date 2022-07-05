@@ -42,13 +42,13 @@ def calculateFrequencies(filename):
     seg_freq = seg_freq[seg_freq.route_name != 'All lines']
 
     #first get total trips in the hour for all routes
-    hourly = seg_freq.groupby(['segment_id','dir_id', 'window'], as_index = False).agg({'frequency': 'sum'})
+    hourly = seg_freq.groupby(['segment_id', 'window'], as_index = False).agg({'frequency': 'sum'})
 
     #then from that, get max trips in a 1-hr period for the day
-    max_freqs = hourly.groupby(['segment_id', 'dir_id'], as_index = False).agg(max_freq = ('frequency', 'max'))
+    max_freqs = hourly.groupby(['segment_id'], as_index = False).agg(max_freq = ('frequency', 'max'))
 
     #get total trips throughout the day
-    df = seg_freq.groupby(['segment_id','dir_id','s_st_id', 's_st_name', 'e_st_name']).agg(
+    df = seg_freq.groupby(['segment_id','s_st_id', 's_st_name', 'e_st_name']).agg(
         {'route_name': list, 'frequency': 'sum', 'geometry': 'first'}
     ).reset_index()
 
@@ -56,7 +56,7 @@ def calculateFrequencies(filename):
     df['route_name'] = df.route_name.apply(lambda x: ",".join(list(np.unique(x))) if type(x) == str else "null" )
 
     #merge these 2 metrics back into same dataframe
-    df = df.merge(max_freqs, on = ['segment_id', 'dir_id'])
+    df = df.merge(max_freqs, on = 'segment_id')
 
     #Convert to geodataframe and save segments as geojson
     return gpd.GeoDataFrame(df, geometry = 'geometry')
@@ -69,9 +69,7 @@ def saveFile(key):
     return filename
 
 def compareOldandNew(old, new):
-    #this direction reversal is the only thing that might not generalize to other files
-    new['dir_id'] = new.dir_id.apply(lambda x: 'Inbound' if x == 'Outbound' else 'Outbound')
-    a = new.merge(old, on = ['segment_id','dir_id'], how = 'outer', indicator = True)
+    a = new.merge(old, on = 'segment_id', how = 'outer', indicator = True)
     a.drop(columns = ['s_st_id_y',
         's_st_name_y', 'e_st_name_y'], inplace = True)
     a.columns = a.columns.str.replace('_x', '')
